@@ -6,6 +6,8 @@ class PrecioBase(BaseModel):
     precio: float
     unidad: str
     fecha: date
+    fuente: Optional[str] = None
+    region: Optional[str] = None
 
 class PrecioCreate(PrecioBase):
     pass
