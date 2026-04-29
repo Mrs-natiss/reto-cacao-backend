@@ -18,12 +18,12 @@ def get_ultimo_precio():
     conn.close()
     return precio
 
-def create_precio(precio, unidad, fecha):
+def create_precio(precio, unidad, fecha, fuente=None, region=None):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO precio_cacao (precio, unidad, fecha) VALUES (%s, %s, %s) RETURNING *",
-        (precio, unidad, fecha)
+        "INSERT INTO precio_cacao (precio, unidad, fecha, fuente, region) VALUES (%s, %s, %s, %s, %s) RETURNING *",
+        (precio, unidad, fecha, fuente, region)
     )
     nuevo = cursor.fetchone()
     conn.commit()
@@ -31,12 +31,12 @@ def create_precio(precio, unidad, fecha):
     conn.close()
     return nuevo
 
-def update_precio(id, precio, unidad, fecha):
+def update_precio(id, precio, unidad, fecha, fuente=None, region=None):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "UPDATE precio_cacao SET precio=%s, unidad=%s, fecha=%s WHERE id=%s RETURNING *",
-        (precio, unidad, fecha, id)
+        "UPDATE precio_cacao SET precio=%s, unidad=%s, fecha=%s, fuente=%s, region=%s WHERE id=%s RETURNING *",
+        (precio, unidad, fecha, fuente, region, id)
     )
     actualizado = cursor.fetchone()
     conn.commit()
